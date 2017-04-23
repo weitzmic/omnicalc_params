@@ -15,7 +15,7 @@ class CalculationsController < ApplicationController
     @user_num = params["number"].to_f
     # .to_f - converting to a float - string class to number class
 
-    @square_root = (Math.sqrt(@user_num)).round(2)
+    @square_root = (Math.sqrt(@user_num)).round(3)
 
     render("calculations/square_root.html.erb")
   end
@@ -71,7 +71,7 @@ class CalculationsController < ApplicationController
 
   def square_root_results
     @user_num = params[:user_num].to_f
-    @square_root = (Math.sqrt(@user_num)).round(2)
+    @square_root = (Math.sqrt(@user_num)).round(3)
 
     render("calculations/square_root_results.html.erb")
 
