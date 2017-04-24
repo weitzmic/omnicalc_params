@@ -24,6 +24,7 @@ class CalculationsController < ApplicationController
     # Parameters: {"number"=>"8"}
 
     @apr = params["rate"].to_f / 100
+    @apr_formatted = helpers.number_to_percentage(@apr, :precision => 2)
     @years = params["years"].to_i
     @principal = params["principal"].to_f
 
@@ -31,6 +32,7 @@ class CalculationsController < ApplicationController
     nper = @years * 12
 
     @monthly_payment = ((monthly_rate * @principal) / (1- (1+ monthly_rate)**-nper)).round(2).to_f
+    @monthly_payment_formatted = helpers.number_to_currency(@monthly_payment, :precision => 2)
 
 
 
@@ -85,7 +87,8 @@ class CalculationsController < ApplicationController
 
   def payment_results
 
-    @apr = params["rate"].to_f / 100
+    @apr = (params["rate"].to_f).round(4)
+    @apr_formatted = helpers.number_to_percentage(@apr, :precision => 4)
     @years = params["years"].to_i
     @principal = params["principal"].to_f
 
@@ -93,11 +96,31 @@ class CalculationsController < ApplicationController
     nper = @years * 12
 
     @monthly_payment = ((monthly_rate * @principal) / (1- (1+ monthly_rate)**-nper)).round(2).to_f
+    @monthly_payment_formatted = helpers.number_to_currency(@monthly_payment, :precision => 2)
 
 
     render("calculations/payment_results.html.erb")
 
   end
+
+  def random_form
+
+    render("calculations/random_form.html.erb")
+
+  end
+
+  def random_results
+
+    @min = params["min"].to_f
+    @max = params["max"].to_i
+
+    @random_number = (rand(@min..@max)).round(0)
+
+
+    render("calculations/random_results.html.erb")
+
+  end
+
 
 
 end
